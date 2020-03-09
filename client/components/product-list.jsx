@@ -10,7 +10,13 @@ export default class ProductList extends Component {
   }
 
   getProducts() {
-
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          grades: data
+        });
+      });
   }
 
   render() {
