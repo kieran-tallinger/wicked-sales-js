@@ -29,7 +29,7 @@ export default class App extends Component {
     if (this.state.view.name === 'catalog') {
       page = <ProductList setView={this.setView}/>;
     } else if (this.state.view.name === 'details') {
-      page = <ProductDetails />;
+      page = <ProductDetails setView={this.setView} params={this.view.params}/>;
     }
     return (
       <div className="container">
