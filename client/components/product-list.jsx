@@ -36,7 +36,7 @@ export default class ProductList extends Component {
                 name={product.name}
                 price={product.price}
                 short={product.shortDescription}
-                setView={this.props.setView}
+                onClick={this.props.setView('details', { productId: product.productId })}
               />
             );
           })
