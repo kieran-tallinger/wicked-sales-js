@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './header';
 import ProductList from './product-list';
+import ProductDetails from './product-details';
 
 export default class App extends Component {
   constructor(props) {
@@ -24,10 +25,16 @@ export default class App extends Component {
   }
 
   render() {
+    let page = null;
+    if (this.state.view.name === 'catalog') {
+      page = <ProductList setView={this.setView}/>;
+    } else if (this.state.view.name === 'details') {
+      page = <ProductDetails />;
+    }
     return (
       <div className="container">
         <Header />
-        <ProductList setView={this.setView}/>
+        {page}
       </div>
     );
   }
