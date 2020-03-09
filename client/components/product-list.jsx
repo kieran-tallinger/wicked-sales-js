@@ -9,6 +9,10 @@ export default class ProductList extends Component {
     };
   }
 
+  componentDidMount() {
+    this.getProducts();
+  }
+
   getProducts() {
     fetch('/api/products')
       .then(res => res.json())
