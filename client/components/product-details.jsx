@@ -22,7 +22,7 @@ export default class ProductDetails extends Component {
   render() {
     return (
       <div className="row">
-        <a className="text-muted">&lt; Back to catalog</a>
+        <a onClick={this.props.setView('catalog', {})} className="text-muted">&lt; Back to catalog</a>
         <div className="row">
           <img className="col-4 mr-2" src={this.state.product.image} alt={this.state.product.shortDescription}/>
           <div className="col-7">
