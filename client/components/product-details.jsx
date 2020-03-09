@@ -9,6 +9,16 @@ export default class ProductDetails extends Component {
     };
   }
 
+  componentDidMount(id) {
+    fetch(`/api/products/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          product: data
+        });
+      });
+  }
+
   render() {
     return (
       null
