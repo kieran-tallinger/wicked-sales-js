@@ -41,13 +41,16 @@ app.get('/api/products/:productId', (req, res, next) => {
   const sql = `
     select *
       from "products"
-     where "productId" = $1
+     where "productId" = $1;
   `;
   db.query(sql, values)
     .then(result => {
-      result.json(result.rows[0]);
+      if (result.rows.length === 0) {
+        next(new ClientError(`Cannot find a product with the id of ${productId}`, 404));
+      }
+      res.json(result.rows[0]);
     })
-    .catch(err => next(new ClientError(err)));
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
