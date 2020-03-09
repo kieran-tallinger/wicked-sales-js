@@ -18,29 +18,27 @@ export default class ProductList extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
-          grades: data
+          products: data
         });
       });
   }
 
   render() {
     return (
-      <div className="row">
-        <div className="col-4">
-          {
-            this.state.products.map(product => {
-              return (
-                <ProductListItem
-                  key={product.productId}
-                  img={product.image}
-                  name={product.name}
-                  price={product.price}
-                  short={product.shortDescription}
-                />
-              );
-            })
-          }
-        </div>
+      <div className="row justify-content-around ">
+        {
+          this.state.products.map(product => {
+            return (
+              <ProductListItem
+                key={product.productId}
+                img={product.image}
+                name={product.name}
+                price={product.price}
+                short={product.shortDescription}
+              />
+            );
+          })
+        }
       </div>
     );
   }
