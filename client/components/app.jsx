@@ -11,6 +11,7 @@ export default class App extends Component {
         params: {}
       }
     };
+    this.setView = this.setView.bind(this);
   }
 
   setView(name, params) {
@@ -26,7 +27,7 @@ export default class App extends Component {
     return (
       <div className="container">
         <Header />
-        <ProductList />
+        <ProductList setView={this.setView}/>
       </div>
     );
   }
