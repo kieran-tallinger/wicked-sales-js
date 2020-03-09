@@ -43,6 +43,9 @@ app.get('/api/products/:productId', (req, res, next) => {
       from "products"
      where "productId" = $1;
   `;
+  if (!productId) {
+    next(new ClientError('Please try again with a valid product Id', 400));
+  }
   db.query(sql, values)
     .then(result => {
       if (result.rows.length === 0) {
