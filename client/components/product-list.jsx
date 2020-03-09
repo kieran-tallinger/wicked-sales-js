@@ -15,19 +15,22 @@ export default class ProductList extends Component {
 
   render() {
     return (
-      <div className="row">
-        <div>
-          {
-            this.state.products.map(student => {
-              return (
-                <ProductListItem
-                  key={student.id}
-                />
-              );
-            })
-          }
+      <div className="container">
+        <div className="row">
+          <div className="col-4">
+            {
+              this.state.products.map(student => {
+                return (
+                  <ProductListItem
+                    key={student.id}
+                  />
+                );
+              })
+            }
+          </div>
         </div>
       </div>
+
     );
   }
 }
