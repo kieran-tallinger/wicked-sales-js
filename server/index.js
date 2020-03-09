@@ -36,8 +36,20 @@ app.get('/api/products', (req, res, next) => {
 });
 
 app.get('/api/products/:productId', (req, res, next) => {
-
+  const productId = parseInt(req.params.productId);
+  const values = [productId];
+  const sql = `
+    select *
+      from "products"
+     where "productId" = $1
+  `;
+  db.query(sql, values)
+    .then(result => {
+      result.json(result.rows[0]);
+    })
+    .catch(err => next(new ClientError(err)));
 });
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
