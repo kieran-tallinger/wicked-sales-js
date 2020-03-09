@@ -9,13 +9,25 @@ export default class ProductList extends Component {
     };
   }
 
+  getProducts() {
+
+  }
+
   render() {
     return (
-      <div>
-        <ProductListItem
-        />
+      <div className="row">
+        <div>
+          {
+            this.state.products.map(student => {
+              return (
+                <ProductListItem
+                  key={student.id}
+                />
+              );
+            })
+          }
+        </div>
       </div>
-
     );
   }
 }
