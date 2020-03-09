@@ -25,26 +25,23 @@ export default class ProductList extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-4">
-            {
-              this.state.products.map(product => {
-                return (
-                  <ProductListItem
-                    key={product.productId}
-                    img={product.image}
-                    name={product.name}
-                    price={product.price}
-                    short={product.shortDescription}
-                  />
-                );
-              })
-            }
-          </div>
+      <div className="row">
+        <div className="col-4">
+          {
+            this.state.products.map(product => {
+              return (
+                <ProductListItem
+                  key={product.productId}
+                  img={product.image}
+                  name={product.name}
+                  price={product.price}
+                  short={product.shortDescription}
+                />
+              );
+            })
+          }
         </div>
       </div>
-
     );
   }
 }
