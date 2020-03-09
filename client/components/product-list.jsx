@@ -31,10 +31,12 @@ export default class ProductList extends Component {
             return (
               <ProductListItem
                 key={product.productId}
+                id={product.productId}
                 img={product.image}
                 name={product.name}
                 price={product.price}
                 short={product.shortDescription}
+                setView={this.props.setView}
               />
             );
           })
