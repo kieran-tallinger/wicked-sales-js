@@ -8,7 +8,8 @@ export default class ProductDetails extends Component {
     };
   }
 
-  componentDidMount(id) {
+  componentDidMount() {
+    const id = this.props.params.productId;
     fetch(`/api/products/${id}`)
       .then(res => res.json())
       .then(data => {
