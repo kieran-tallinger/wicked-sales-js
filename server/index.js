@@ -35,6 +35,27 @@ app.get('/api/products', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/products/:productId', (req, res, next) => {
+  const productId = parseInt(req.params.productId);
+  const values = [productId];
+  const sql = `
+    select *
+      from "products"
+     where "productId" = $1;
+  `;
+  if (!productId) {
+    return next(new ClientError('Please try again with a valid product Id', 400));
+  }
+  db.query(sql, values)
+    .then(result => {
+      if (result.rows.length === 0) {
+        next(new ClientError(`Cannot find a product with the id of ${productId}`, 404));
+      }
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
