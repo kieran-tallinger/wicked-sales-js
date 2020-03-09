@@ -3,11 +3,11 @@ import React from 'react';
 export default function ProductListItem(props) {
   return (
     <div className="card">
-      <img src="../../server/public/images/favicon.png" alt="sample-image"/>
+      <img src={props.img} alt={props.short}/>
       <div className="card-body">
-        <h5 className="card-title">Card Title</h5>
-        <p>$0.00</p>
-        <p className="card-text">Some sample text as placeholder</p>
+        <h5 className="card-title">{props.name}</h5>
+        <p>${props.price}</p>
+        <p className="card-text">{props.short}</p>
       </div>
     </div>
   );

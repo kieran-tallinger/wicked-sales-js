@@ -25,10 +25,14 @@ export default class ProductList extends Component {
         <div className="row">
           <div className="col-4">
             {
-              this.state.products.map(student => {
+              this.state.products.map(product => {
                 return (
                   <ProductListItem
-                    key={student.id}
+                    key={product.productId}
+                    img={product.image}
+                    name={product.name}
+                    price={product.price}
+                    short={product.shortDescription}
                   />
                 );
               })
