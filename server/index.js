@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 require('dotenv/config');
 const express = require('express');
 
@@ -61,10 +62,49 @@ app.get('/api/cart', (req, res, next) => {
 });
 
 app.post('/api/cart', (req, res, next) => {
-  const id = req.body.productId;
-  if (!id) {
+  const productId = parseInt(req.body.productId);
+  const values = [productId];
+  const sqlPrice = `
+    select "price"
+      from "products"
+     where "productId" = $1;
+  `;
+  if (!productId) {
     return next(new ClientError('The productId given is not valid', 400));
   }
+  db.query(sqlPrice, values)
+    .then(result => {
+      const price = result.rows[0].price;
+      if (result.rows.length === 0) {
+        throw new ClientError('The product does not appear to exist/have a price', 400);
+      } else {
+        const sqlCartId = `
+          insert into "carts" ("cartId", "createdAt")
+          values (default, default)
+          returning "cartId";
+        `;
+        db.query(sqlCartId)
+          .then(result => {
+            return { cartId: result.rows[0].cartId, price: price };
+          })
+          .then(result => {
+            req.session.cartId = result.cartId;
+            const cartValues = [result.cartId, productId, result.price];
+            const sqlCartItems = `
+              insert into "cartItems" ("cartId", "productId", "price")
+              values ($1, $2, $3)
+              returning "cartItemId";
+            `;
+            db.query(sqlCartItems, cartValues)
+              .then(result => {
+                return result.rows[0].cartItemId;
+              })
+              .then(result => {
+                console.log(result);
+              });
+          });
+      }
+    });
 });
 
 app.use('/api', (req, res, next) => {
