@@ -1,10 +1,8 @@
-.card {
-  height: 450px;
-}
 .card-image {
   height: 200px;
   object-fit: contain;
 }
 .card-spot {
   object-fit: contain;
+  height: 450px;
 }

@@ -13,6 +13,7 @@ export default class App extends Component {
       }
     };
     this.setView = this.setView.bind(this);
+    this.checkView = this.checkView.bind(this);
   }
 
   setView(name, params) {
@@ -24,13 +25,16 @@ export default class App extends Component {
     });
   }
 
-  render() {
-    let page = null;
+  checkView() {
     if (this.state.view.name === 'catalog') {
-      page = <ProductList setView={this.setView}/>;
+      return <ProductList setView={this.setView}/>;
     } else if (this.state.view.name === 'details') {
-      page = <ProductDetails setView={this.setView} params={this.view.params}/>;
+      return <ProductDetails setView={this.setView} params={this.view.params}/>;
     }
+  }
+
+  render() {
+    const page = this.checkView();
     return (
       <div className="container">
         <Header />
