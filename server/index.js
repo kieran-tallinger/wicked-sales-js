@@ -76,8 +76,7 @@ app.get('/api/cart', (req, res, next) => {
     db.query(sql, values)
       .then(result => {
         res.json(result.rows[0]);
-      })
-      .catch(err => next(err));
+      });
   }
 });
 
@@ -103,7 +102,7 @@ app.post('/api/cart', (req, res, next) => {
           values (default, default)
           returning "cartId";
         `;
-        db.query(sqlCartId)
+        return db.query(sqlCartId)
           .then(result => {
             return { cartId: result.rows[0].cartId, price: price };
           });
@@ -119,30 +118,31 @@ app.post('/api/cart', (req, res, next) => {
         values ($1, $2, $3)
         returning "cartItemId";
       `;
-      db.query(sqlCartItems, cartValues)
+      return db.query(sqlCartItems, cartValues)
         .then(result => {
           return result.rows[0].cartItemId;
-        })
-        .then(result => {
-          const cartItemId = result;
-          const cartIdValues = [cartItemId];
-          const sqlJoinProduct = `
-            select "c"."cartItemId",
-                  "c"."price",
-                  "p"."productId",
-                  "p"."image",
-                  "p"."name",
-                  "p"."shortDescription"
-              from "cartItems" as "c"
-              join "products" as "p" using ("productId")
-            where "c"."cartItemId" = $1;
-          `;
-          db.query(sqlJoinProduct, cartIdValues)
-            .then(result => {
-              return res.status(201).json(result.rows[0]);
-            });
         });
-    });
+    })
+    .then(result => {
+      const cartItemId = result;
+      const cartIdValues = [cartItemId];
+      const sqlJoinProduct = `
+        select "c"."cartItemId",
+              "c"."price",
+              "p"."productId",
+              "p"."image",
+              "p"."name",
+              "p"."shortDescription"
+          from "cartItems" as "c"
+          join "products" as "p" using ("productId")
+        where "c"."cartItemId" = $1;
+      `;
+      db.query(sqlJoinProduct, cartIdValues)
+        .then(result => {
+          return res.status(201).json(result.rows[0]);
+        });
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
