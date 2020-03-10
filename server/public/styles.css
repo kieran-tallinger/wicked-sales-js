@@ -1,3 +1,7 @@
+.back {
+  cursor: pointer;
+}
+
 .card-image {
   height: 200px;
   object-fit: contain;
