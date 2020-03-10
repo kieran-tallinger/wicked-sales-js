@@ -138,7 +138,7 @@ app.post('/api/cart', (req, res, next) => {
           join "products" as "p" using ("productId")
         where "c"."cartItemId" = $1;
       `;
-      db.query(sqlJoinProduct, cartIdValues)
+      return db.query(sqlJoinProduct, cartIdValues)
         .then(result => {
           return res.status(201).json(result.rows[0]);
         });
