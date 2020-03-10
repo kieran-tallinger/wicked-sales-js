@@ -59,6 +59,14 @@ app.get('/api/products/:productId', (req, res, next) => {
 app.get('/api/cart', (req, res, next) => {
   return res.json();
 });
+
+app.post('/api/cart', (req, res, next) => {
+  const id = req.body.productId;
+  if (!id) {
+    return next(new ClientError('The productId given is not valid', 400));
+  }
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
