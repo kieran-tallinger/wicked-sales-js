@@ -34,6 +34,16 @@ export default class App extends Component {
     }
   }
 
+  getCartItems() {
+    fetch('/api/cart')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          cart: data
+        });
+      });
+  }
+
   render() {
     const page = this.checkView();
     return (
