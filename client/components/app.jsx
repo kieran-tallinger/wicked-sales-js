@@ -17,6 +17,10 @@ export default class App extends Component {
     this.checkView = this.checkView.bind(this);
   }
 
+  componentDidMount() {
+    this.getCartItems();
+  }
+
   setView(name, params) {
     this.setState({
       view: {
