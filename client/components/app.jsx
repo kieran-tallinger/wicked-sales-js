@@ -52,7 +52,7 @@ export default class App extends Component {
     const page = this.checkView();
     return (
       <div className="container">
-        <Header />
+        <Header cartItemCount={this.state.cart.length} />
         {page}
       </div>
     );
