@@ -15,7 +15,6 @@ export default class App extends Component {
     };
     this.setView = this.setView.bind(this);
     this.checkView = this.checkView.bind(this);
-    this.getCartItems = this.getCartItems.bind(this);
   }
 
   componentDidMount() {
@@ -41,9 +40,27 @@ export default class App extends Component {
 
   getCartItems() {
     fetch('/api/cart')
+      .then(res => res.json())
       .then(data => {
         this.setState({
           cart: data
+        });
+      });
+  }
+
+  addToCart(product) {
+    const fetchParams = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    };
+    fetch('/api/cart', fetchParams)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          cart: this.state.cart.concat(data)
         });
       });
   }
