@@ -1,10 +1,22 @@
 import React from 'react';
 
 export default function Header(props) {
+  let itemText = '';
+  if (props.cartItemCount === 1) {
+    itemText = 'item';
+  } else {
+    itemText = 'items';
+  }
   return (
-    <div className="row py-2 bg-dark">
-      <i className="fas fa-dollar-sign fa-lg my-1 mx-1 text-white"></i>
-      <h5 className="text-white">Wicked Sales</h5>
+    <div className="row justify-content-between pt-2 pb-1 bg-dark">
+      <div className="row col-3 ml-3">
+        <i className="fas fa-dollar-sign fa-lg mt-2 mx-1 text-white"></i>
+        <h5 className="text-white mt-1">Wicked Sales</h5>
+      </div>
+      <div className="row col-2">
+        <p className="text-white mt-1">{`${props.cartItemCount} ${itemText}`}</p>
+        <i className="fas fa-shopping-cart fa-2x text-white"></i>
+      </div>
     </div>
   );
 }

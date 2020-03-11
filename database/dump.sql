@@ -184,6 +184,19 @@ ALTER TABLE ONLY public.products ALTER COLUMN "productId" SET DEFAULT nextval('p
 --
 
 COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
+1	12	2	2595
+2	13	2	2595
+3	14	2	2595
+4	15	2	2595
+5	16	2	2595
+6	16	2	2595
+7	16	1	2999
+8	16	2	2595
+9	16	2	2595
+14	28	2	2595
+15	28	2	2595
+16	28	2	2595
+17	28	2	2595
 \.
 
 
@@ -192,6 +205,34 @@ COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
 --
 
 COPY public.carts ("cartId", "createdAt") FROM stdin;
+1	2020-03-09 18:18:33.910927-07
+2	2020-03-09 18:21:16.072108-07
+3	2020-03-09 18:23:58.76814-07
+4	2020-03-09 18:29:56.326286-07
+5	2020-03-09 18:41:40.602408-07
+6	2020-03-09 18:44:13.993918-07
+7	2020-03-09 18:51:12.436005-07
+8	2020-03-09 19:00:22.581834-07
+9	2020-03-09 19:02:12.325763-07
+10	2020-03-09 19:03:07.223336-07
+11	2020-03-09 19:03:45.441735-07
+12	2020-03-09 19:15:49.157371-07
+13	2020-03-09 19:16:08.241135-07
+14	2020-03-09 19:17:37.951305-07
+15	2020-03-09 19:27:07.414868-07
+16	2020-03-09 19:29:20.907966-07
+17	2020-03-10 10:13:32.448374-07
+18	2020-03-10 12:04:10.174633-07
+19	2020-03-10 12:04:49.071243-07
+20	2020-03-10 12:05:14.285868-07
+21	2020-03-10 12:05:56.978002-07
+22	2020-03-10 12:07:28.836742-07
+23	2020-03-10 12:08:54.271947-07
+24	2020-03-10 12:10:02.888397-07
+25	2020-03-10 12:14:07.851429-07
+26	2020-03-10 12:15:15.939526-07
+27	2020-03-10 12:35:12.539712-07
+28	2020-03-10 12:37:03.603835-07
 \.
 
 
@@ -213,14 +254,14 @@ COPY public.products ("productId", name, price, image, "shortDescription", "long
 -- Name: cartItems_cartItemId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 1, false);
+SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 17, true);
 
 
 --
 -- Name: carts_cartId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."carts_cartId_seq"', 1, false);
+SELECT pg_catalog.setval('public."carts_cartId_seq"', 28, true);
 
 
 --
