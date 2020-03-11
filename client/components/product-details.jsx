@@ -41,7 +41,7 @@ export default class ProductDetails extends Component {
   render() {
     const { product } = this.state;
     return product ? this.renderCatalog() : (
-      <span>Loading details..</span>
+      <span>Loading details...</span>
     );
   }
 }

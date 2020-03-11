@@ -10,7 +10,8 @@ export default class App extends Component {
       view: {
         name: 'catalog',
         params: {}
-      }
+      },
+      cart: []
     };
     this.setView = this.setView.bind(this);
     this.checkView = this.checkView.bind(this);
