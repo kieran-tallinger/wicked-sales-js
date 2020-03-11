@@ -15,6 +15,7 @@ export default class App extends Component {
     };
     this.setView = this.setView.bind(this);
     this.checkView = this.checkView.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ export default class App extends Component {
     if (this.state.view.name === 'catalog') {
       return <ProductList setView={this.setView}/>;
     } else if (this.state.view.name === 'details') {
-      return <ProductDetails setView={this.setView} params={this.state.view.params}/>;
+      return <ProductDetails setView={this.setView} addToCart={this.addToCart} params={this.state.view.params}/>;
     }
   }
 
