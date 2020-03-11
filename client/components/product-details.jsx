@@ -29,6 +29,7 @@ export default class ProductDetails extends Component {
             <h2>{this.state.product.name}</h2>
             <h5 className="text-muted">${this.state.product.price}</h5>
             <p>{this.state.product.shortDescription}</p>
+            <button className="btn btn-primary" onClick={() => this.props.addToCart(this.state.product)}>Add To Cart</button>
           </div>
           <div className="row">
             <p>{this.state.product.longDescription}</p>
