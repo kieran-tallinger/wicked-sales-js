@@ -14,7 +14,7 @@ export default function Header(props) {
         <h5 className="text-white mt-1">Wicked Sales</h5>
       </div>
       <div className="row col-2">
-        <p className="text-white mt-1">{`${props.cartItemCount} ${itemText}`}</p>
+        <a onClick={() => props.setView('cart', {})}className="text-white back mt-1">{`${props.cartItemCount} ${itemText}`}</a>
         <i className="fas fa-shopping-cart fa-2x text-white"></i>
       </div>
     </div>
