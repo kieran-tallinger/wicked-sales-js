@@ -1,15 +1,15 @@
 import React from 'react';
 import CartSummaryItem from './cart-summary-item';
 
-export default function CartSummary(items) {
+export default function CartSummary(props) {
   let total = 0;
   let body = null;
-  if (items.length === 0) {
+  if (props.items.length === 0) {
     body = <div><span>Your Cart is currently empty! Go checkout our catalog!</span></div>;
   } else {
     body = <div>
       {
-        items.map(product => {
+        props.items.map(product => {
           total = total + product.price;
           return (
             <CartSummaryItem
