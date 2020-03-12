@@ -73,7 +73,7 @@ export default class App extends Component {
     const page = this.checkView();
     return (
       <div className="container">
-        <Header cartItemCount={this.state.cart.length} />
+        <Header setView={this.setView} cartItemCount={this.state.cart.length} />
         {page}
       </div>
     );
