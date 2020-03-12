@@ -8,7 +8,7 @@ const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
 
 const app = express();
-
+let sessionCartId = null;
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
 
@@ -58,10 +58,10 @@ app.get('/api/products/:productId', (req, res, next) => {
 });
 
 app.get('/api/cart', (req, res, next) => {
-  if (!req.session.cartId) {
+  if (!sessionCartId) {
     return [];
   } else {
-    const values = [req.session.cartId];
+    const values = [sessionCartId];
     const sql = `
     select "c"."cartItemId",
           "c"."price",
@@ -97,7 +97,7 @@ app.post('/api/cart', (req, res, next) => {
       const price = result.rows[0].price;
       if (result.rows.length === 0) {
         throw new ClientError('The product does not appear to exist/have a price', 400);
-      } else if (!req.session.cartId) {
+      } else if (!sessionCartId) {
         const sqlCartId = `
           insert into "carts" ("cartId", "createdAt")
           values (default, default)
@@ -105,14 +105,14 @@ app.post('/api/cart', (req, res, next) => {
         `;
         return db.query(sqlCartId)
           .then(result => {
+            sessionCartId = result.rows[0].cartId;
             return { cartId: result.rows[0].cartId, price: price };
           });
       } else {
-        return { cartId: req.session.cartId, price: price };
+        return { cartId: sessionCartId, price: price };
       }
     })
     .then(result => {
-      req.session.cartId = result.cartId;
       const cartValues = [result.cartId, productId, result.price];
       const sqlCartItems = `
         insert into "cartItems" ("cartId", "productId", "price")
@@ -147,12 +147,12 @@ app.post('/api/cart', (req, res, next) => {
 });
 
 app.post('/api/orders', (req, res, next) => {
-  if (!req.session.cartId) {
+  if (!sessionCartId) {
     next(new ClientError('There doesn\'t seem to be a cart available for checkout', 400));
   } else if (!req.body.name || !req.body.creditCard || !req.body.shippingAddress) {
     next(new ClientError('A name, credit card number, and shipping address must be provided', 400));
   }
-  const values = [req.session.cartId, req.body.name, req.body.creditCard, req.body.shippingAddress];
+  const values = [sessionCartId, req.body.name, req.body.creditCard, req.body.shippingAddress];
   const sql = `
     insert into "orders" ("cartId","name","creditCard","shippingAddress")
     values ($1, $2, $3, $4)
@@ -160,9 +160,10 @@ app.post('/api/orders', (req, res, next) => {
   `;
   db.query(sql, values)
     .then(result => {
-      console.log(result);
+      sessionCartId = null;
       return res.status(201).json(result.rows[0]);
-    });
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
