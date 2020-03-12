@@ -149,9 +149,20 @@ app.post('/api/cart', (req, res, next) => {
 app.post('/api/orders', (req, res, next) => {
   if (!req.session.cartId) {
     next(new ClientError('There doesn\'t seem to be a cart available for checkout', 400));
-  } else if (!req.session.name || !req.session.creditCard || !req.session.shippingAddress) {
+  } else if (!req.body.name || !req.body.creditCard || !req.body.shippingAddress) {
     next(new ClientError('A name, credit card number, and shipping address must be provided', 400));
   }
+  const values = [req.session.cartId, req.body.name, req.body.creditCard, req.body.shippingAddress];
+  const sql = `
+    insert into "orders" ("cartId","name","creditCard","shippingAddress")
+    values ($1, $2, $3, $4)
+    returning "orderId", "createdAt", "name", "creditCard", "shippingAddress";
+  `;
+  db.query(sql, values)
+    .then(result => {
+      console.log(result);
+      return res.status(201).json(result.rows[0]);
+    });
 });
 
 app.use('/api', (req, res, next) => {
