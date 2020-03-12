@@ -149,6 +149,8 @@ app.post('/api/cart', (req, res, next) => {
 app.post('/api/orders', (req, res, next) => {
   if (!req.session.cartId) {
     next(new ClientError('There doesn\'t seem to be a cart available for checkout', 400));
+  } else if (!req.session.name || !req.session.creditCard || !req.session.shippingAddress) {
+    next(new ClientError('A name, credit card number, and shipping address must be provided', 400));
   }
 });
 
