@@ -147,7 +147,6 @@ app.post('/api/cart', (req, res, next) => {
 });
 
 app.post('/api/orders', (req, res, next) => {
-  console.log(req.session);
   if (!req.session.cartId) {
     return next(new ClientError('There doesn\'t seem to be a cart available for checkout', 400));
   } else if (!req.body.name || !req.body.creditCard || !req.body.shippingAddress) {
