@@ -17,13 +17,17 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 ALTER TABLE ONLY public.products DROP CONSTRAINT products_pkey;
+ALTER TABLE ONLY public.orders DROP CONSTRAINT orders_pkey;
 ALTER TABLE ONLY public.carts DROP CONSTRAINT carts_pkey;
 ALTER TABLE ONLY public."cartItems" DROP CONSTRAINT "cartItems_pkey";
 ALTER TABLE public.products ALTER COLUMN "productId" DROP DEFAULT;
+ALTER TABLE public.orders ALTER COLUMN "orderId" DROP DEFAULT;
 ALTER TABLE public.carts ALTER COLUMN "cartId" DROP DEFAULT;
 ALTER TABLE public."cartItems" ALTER COLUMN "cartItemId" DROP DEFAULT;
 DROP SEQUENCE public."products_productId_seq";
 DROP TABLE public.products;
+DROP SEQUENCE public."orders_orderId_seq";
+DROP TABLE public.orders;
 DROP SEQUENCE public."carts_cartId_seq";
 DROP TABLE public.carts;
 DROP SEQUENCE public."cartItems_cartItemId_seq";
@@ -125,6 +129,40 @@ ALTER SEQUENCE public."carts_cartId_seq" OWNED BY public.carts."cartId";
 
 
 --
+-- Name: orders; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders (
+    "orderId" integer NOT NULL,
+    "cartId" integer NOT NULL,
+    name text NOT NULL,
+    "creditCard" text NOT NULL,
+    "shippingAddress" text NOT NULL,
+    "createdAt" timestamp(6) with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: orders_orderId_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."orders_orderId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_orderId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."orders_orderId_seq" OWNED BY public.orders."orderId";
+
+
+--
 -- Name: products; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -173,6 +211,13 @@ ALTER TABLE ONLY public.carts ALTER COLUMN "cartId" SET DEFAULT nextval('public.
 
 
 --
+-- Name: orders orderId; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN "orderId" SET DEFAULT nextval('public."orders_orderId_seq"'::regclass);
+
+
+--
 -- Name: products productId; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -197,6 +242,25 @@ COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
 15	28	2	2595
 16	28	2	2595
 17	28	2	2595
+18	29	3	2900
+19	29	1	2999
+20	29	2	2595
+21	30	2	2595
+22	30	1	2999
+23	30	5	9900
+24	31	2	2595
+25	31	2	2595
+26	31	1	2999
+27	31	3	2900
+28	31	4	999
+29	32	1	2999
+30	32	2	2595
+31	32	5	9900
+32	32	5	9900
+33	32	5	9900
+34	32	5	9900
+35	32	5	9900
+36	32	5	9900
 \.
 
 
@@ -233,6 +297,18 @@ COPY public.carts ("cartId", "createdAt") FROM stdin;
 26	2020-03-10 12:15:15.939526-07
 27	2020-03-10 12:35:12.539712-07
 28	2020-03-10 12:37:03.603835-07
+29	2020-03-10 22:41:28.688624-07
+30	2020-03-11 13:25:47.662021-07
+31	2020-03-11 19:49:53.223039-07
+32	2020-03-12 11:08:45.21641-07
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders ("orderId", "cartId", name, "creditCard", "shippingAddress", "createdAt") FROM stdin;
 \.
 
 
@@ -254,14 +330,21 @@ COPY public.products ("productId", name, price, image, "shortDescription", "long
 -- Name: cartItems_cartItemId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 17, true);
+SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 36, true);
 
 
 --
 -- Name: carts_cartId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."carts_cartId_seq"', 28, true);
+SELECT pg_catalog.setval('public."carts_cartId_seq"', 32, true);
+
+
+--
+-- Name: orders_orderId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."orders_orderId_seq"', 1, false);
 
 
 --
@@ -285,6 +368,14 @@ ALTER TABLE ONLY public."cartItems"
 
 ALTER TABLE ONLY public.carts
     ADD CONSTRAINT carts_pkey PRIMARY KEY ("cartId");
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY ("orderId");
 
 
 --
