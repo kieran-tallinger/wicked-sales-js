@@ -69,6 +69,22 @@ export default class App extends Component {
       });
   }
 
+  placeOrder(order) {
+    const fetchParams = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(order)
+    };
+    fetch('/api/orders', fetchParams)
+      .then(result => {
+        this.setState({
+          cart: []
+        });
+      });
+  }
+
   render() {
     const page = this.checkView();
     return (
