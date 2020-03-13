@@ -31,6 +31,21 @@ export default class CheckoutForm extends Component {
     });
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const newOrder = {
+      name: this.state.name,
+      creditCard: this.state.creditCard,
+      shippingAddress: this.state.shippingAddress
+    };
+    this.props.onSubmit(newOrder);
+    this.setState({
+      name: '',
+      creditCard: 0,
+      shippingAddress: ''
+    });
+  }
+
   render() {
     return (
       <div>hi</div>
