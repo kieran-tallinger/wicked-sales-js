@@ -2,6 +2,9 @@
   cursor: pointer;
 }
 
+.address-text {
+  height: 250px;
+}
 .card-image {
   height: 200px;
   object-fit: contain;

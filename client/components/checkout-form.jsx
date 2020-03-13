@@ -51,7 +51,7 @@ export default class CheckoutForm extends Component {
     return (
       <div className="row mt-3">
         <h2 className="col-12">My Cart</h2>
-        <h5 className="col-12 text-muted">Order Total: ${}</h5>
+        <h5 className="col-12 text-muted">Order Total: ${this.props.total}</h5>
         <form className="col-12" onSubmit={this.handleSubmit}>
           <div className="form-row mb-2">
             <label htmlFor="name">Name</label>
@@ -76,13 +76,13 @@ export default class CheckoutForm extends Component {
               value={this.state.creditCard}
               onChange={this.handleCardChange} />
           </div>
-          <div className="form-row mb-2">
-            <label htmlFor="address">Shipping Address</label>
+          <label htmlFor="address">Shipping Address</label>
+          <div className="form-row address-text mb-2">
             <textarea
               required
               id='address'
               placeholder='Please enter address for shipping'
-              className="form-control"
+              className="form-control "
               value={this.state.shippingAddress}
               onChange={this.handleAddressChange} />
           </div>

@@ -27,7 +27,7 @@ export default function CartSummary(props) {
       }
       <div className="row col-12 py-4 justify-content-between">
         <h3 className="col-3">Item Total: ${total}</h3>
-        <button onClick={() => props.setView('checkout', {})} className="col-2 btn btn-primary">Checkout</button>
+        <button onClick={() => props.setView('checkout', { total: total })} className="col-2 btn btn-primary">Checkout</button>
       </div>
     </div>;
   }

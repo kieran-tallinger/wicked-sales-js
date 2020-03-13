@@ -42,7 +42,7 @@ export default class App extends Component {
     } else if (this.state.view.name === 'cart') {
       return <CartSummary setView={this.setView} items={this.state.cart}/>;
     } else if (this.state.view.name === 'checkout') {
-      return <CheckoutForm setView={this.setView} onSubmit={this.placeOrder}/>;
+      return <CheckoutForm setView={this.setView} onSubmit={this.placeOrder} total={this.state.view.params.total}/>;
     }
   }
 
