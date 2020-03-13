@@ -6,8 +6,8 @@ export default function CartSummary(props) {
   let body = null;
   if (props.items.length === 0) {
     body = <div className="row mb-3">
-      <p>Your Cart is currently empty! Go checkout our catalog!</p>
-      <h3 className="col-3">Item Total: ${total}</h3>
+      <p className="col-12">Your Cart is currently empty! Go checkout our catalog!</p>
+      <h3 className="col-12">Item Total: ${total}</h3>
     </div>;
   } else {
     body = <div className="row mb-3">
@@ -25,7 +25,7 @@ export default function CartSummary(props) {
           );
         })
       }
-      <div className="row pb-4 justify-content-between">
+      <div className="row col-12 py-4 justify-content-between">
         <h3 className="col-3">Item Total: ${total}</h3>
         <button onClick={() => props.setView('checkout', {})} className="col-2 btn btn-primary">Checkout</button>
       </div>

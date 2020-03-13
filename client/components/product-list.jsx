@@ -25,7 +25,7 @@ export default class ProductList extends Component {
 
   render() {
     return (
-      <div className="row justify-content-around ">
+      <div className="row justify-content-around mt-3">
         {
           this.state.products.map(product => {
             return (

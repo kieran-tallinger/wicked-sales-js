@@ -11,6 +11,7 @@ export default class CheckoutForm extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleCardChange = this.handleCardChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleNameChange(e) {
@@ -48,23 +49,23 @@ export default class CheckoutForm extends Component {
 
   render() {
     return (
-      <div className="row">
-        <h2>My Cart</h2>
-        <h5 className="text-muted">Order Total: </h5>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-row">
+      <div className="row mt-3">
+        <h2 className="col-12">My Cart</h2>
+        <h5 className="col-12 text-muted">Order Total: ${}</h5>
+        <form className="col-12" onSubmit={this.handleSubmit}>
+          <div className="form-row mb-2">
             <label htmlFor="name">Name</label>
             <input
               required
               autoFocus
               id='name'
               type='text'
-              placeholder='Please enter name for order'
+              placeholder='Please enter name'
               className="form-control"
               value={this.state.name}
               onChange={this.handleNameChange}/>
           </div>
-          <div className="form-row">
+          <div className="form-row mb-2">
             <label htmlFor="credit">Credit Card</label>
             <input
               required
@@ -75,19 +76,19 @@ export default class CheckoutForm extends Component {
               value={this.state.creditCard}
               onChange={this.handleCardChange} />
           </div>
-          <div className="form-row">
+          <div className="form-row mb-2">
             <label htmlFor="address">Shipping Address</label>
             <textarea
               required
               id='address'
-              placeholder='Please enter card number for order'
+              placeholder='Please enter address for shipping'
               className="form-control"
-              value={this.state.creditCard}
+              value={this.state.shippingAddress}
               onChange={this.handleAddressChange} />
           </div>
           <div className="row justify-content-between">
             <a onClick={() => this.props.setView('catalog', {})} className="col-3 back text-muted">&lt; Continue Shopping</a>
-            <button type='submit' className='col-2 btn btn-primary'>Place Order</button>
+            <button type='submit' className='col-2 btn btn-primary mr-3'>Place Order</button>
           </div>
         </form>
       </div>
