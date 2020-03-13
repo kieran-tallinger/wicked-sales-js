@@ -8,6 +8,27 @@ export default class CheckoutForm extends Component {
       creditCard: 0,
       shippingAddress: ''
     };
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleCardChange = this.handleCardChange.bind(this);
+    this.handleAddressChange = this.handleAddressChange.bind(this);
+  }
+
+  handleNameChange(e) {
+    this.setState({
+      name: e.target.value
+    });
+  }
+
+  handleCardChange(e) {
+    this.setState({
+      creditCard: e.target.value
+    });
+  }
+
+  handleAddressChange(e) {
+    this.setState({
+      shippingAddress: e.target.value
+    });
   }
 
   render() {
