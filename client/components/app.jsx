@@ -3,6 +3,7 @@ import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
+import CheckoutForm from './checkout-form';
 
 export default class App extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class App extends Component {
     this.setView = this.setView.bind(this);
     this.checkView = this.checkView.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.placeOrder = this.placeOrder.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +41,8 @@ export default class App extends Component {
       return <ProductDetails setView={this.setView} addToCart={this.addToCart} params={this.state.view.params}/>;
     } else if (this.state.view.name === 'cart') {
       return <CartSummary setView={this.setView} items={this.state.cart}/>;
+    } else if (this.state.view.name === 'checkout') {
+      return <CheckoutForm setView={this.setView} onSubmit={this.placeOrder} total={this.state.view.params.total}/>;
     }
   }
 
@@ -65,6 +69,26 @@ export default class App extends Component {
       .then(data => {
         this.setState({
           cart: this.state.cart.concat(data)
+        });
+      });
+  }
+
+  placeOrder(order) {
+    const fetchParams = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(order)
+    };
+    fetch('/api/orders', fetchParams)
+      .then(result => {
+        this.setState({
+          view: {
+            name: 'catalog',
+            params: {}
+          },
+          cart: []
         });
       });
   }
