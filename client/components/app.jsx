@@ -80,6 +80,10 @@ export default class App extends Component {
     fetch('/api/orders', fetchParams)
       .then(result => {
         this.setState({
+          view: {
+            name: 'catalog',
+            params: {}
+          },
           cart: []
         });
       });
