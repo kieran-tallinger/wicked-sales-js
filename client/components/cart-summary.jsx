@@ -5,7 +5,7 @@ export default function CartSummary(props) {
   let total = 0;
   let body = null;
   if (props.items.length === 0) {
-    body = <div className="row"><span>Your Cart is currently empty! Go checkout our catalog!</span></div>;
+    body = <div className="row mb-3"><span>Your Cart is currently empty! Go checkout our catalog!</span></div>;
   } else {
     body = <div className="row mb-3">
       {
@@ -29,7 +29,7 @@ export default function CartSummary(props) {
       <a onClick={() => props.setView('catalog', {})} className="row my-3 back text-muted">&lt; Back to catalog</a>
       <h2 className="row mb-4">My Cart</h2>
       {body}
-      <h3 className="row pb-3">Item Total:${total}</h3>
+      <h3 className="row pb-3">Item Total: ${total}</h3>
     </div>
   );
 }
